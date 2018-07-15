@@ -11,6 +11,8 @@
 
 #include <stdio.h>
 
+#include <newlib/c-syscalls.h>
+
 //
 // Demonstrate how to print a greeting message on standard output
 // and exit.
@@ -22,6 +24,8 @@
 int
 main()
 {
-  printf("Hello RISC-V World!");
+  write(0,(const void*)"Test",4);
+  puts("Hello RISC-V World!");
+  write(0,(const void*)"Test",4);
   return 0;
 }
