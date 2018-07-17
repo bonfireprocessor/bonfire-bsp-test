@@ -11,7 +11,11 @@
 
 #include <stdio.h>
 
-#include <newlib/c-syscalls.h>
+
+#include <micro-os-plus/board.h>
+#include <micro-os-plus/architecture.h>
+
+#include <sysclock.h>
 
 //
 // Demonstrate how to print a greeting message on standard output
@@ -24,8 +28,17 @@
 int
 main()
 {
-  write(0,(const void*)"Test",4);
-  puts("Hello RISC-V World!");
-  write(0,(const void*)"Test",4);
+//char Buff[256];
+
+  printf("Hello RISC-V World!\n");
+
+  //sprintf(Buff,"MSTATUS: %lx\n",riscv::csr::mstatus());
+  //puts(Buff);
+  printf("MSTATUS: %lx\n",riscv::csr::mstatus());
+  printf("RTC Frequency %d\n",riscv::board::rtc_frequency_hz());
+  while(1) {
+	printf("MTime %u\n",riscv::device::mtime_low());
+  }
+
   return 0;
 }

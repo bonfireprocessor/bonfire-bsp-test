@@ -603,7 +603,7 @@ trapframe_t* handle_exception (trapframe_t *ptf)
 
       /* kill the program */
     case 'k' :
-#ifdef BONFIRE
+#ifdef BONFIRE_ARTY_BOARD
       ptf->epc=SRAM_BASE;
       semaphore=0;
       return ptf;
@@ -633,11 +633,13 @@ trapframe_t* handle_exception (trapframe_t *ptf)
 }
 
 
+extern void riscv_core_handle_trap();
+
 trapframe_t* trap_handler(trapframe_t *ptf)
 {
 
     if (ptf->cause & 0x80000000) {
-      // place interrupt handler here...
+      riscv_core_handle_trap();
       return ptf;
     }  else {
        return handle_exception(ptf);

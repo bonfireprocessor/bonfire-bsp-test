@@ -78,7 +78,7 @@ int i;
 
 
 	// init_uart(BAUD_RATE);
-	 for(i=0;i<10;i++) putChar((int)'X');
+
 	// Disable all interrupts.
 	  riscv::csr::clear_mstatus_bits (RISCV_CSR_MSTATUS_MIE);
 	  // Disable all individual interrupts.
@@ -109,9 +109,10 @@ void
 //	  // Enable interrupts.
 //	  riscv::csr::set_mstatus_bits (RISCV_CSR_MSTATUS_MIE);
 
-  putChar((int)'D');
+
   gdb_setup_interface(115200);
   gdb_initDebugger(1);
+  putChar((int)'D');
   asm("ebreak");
 
 
@@ -125,7 +126,10 @@ ssize_t _write(int fd,const void* buff, size_t szBuff)
 char *p = (char*)buff;
 int i;
 
-  for(i=0;i<szBuff;i++) putChar(p[i]);
+  for(i=0;i<szBuff;i++) {
+	  putChar(p[i]);
+	  if (p[i]=='\n') putChar('\r');
+  }
   return szBuff;
 }
 
